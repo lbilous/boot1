@@ -1,6 +1,9 @@
 package hello;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,25 @@ public class GreetingController {
 
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));
+    }
+
+    @Autowired
+    AccountRepository repository;
+
+
+    @RequestMapping("/acc")
+    public Account account(@RequestParam(value = "login") String login){
+        Account account = repository.findByLogin(login); // select * from account where login = :1
+        return account;
+    }
+
+    @Autowired
+    PostRepository TextRepository;
+
+    @RequestMapping("/accyuofyhkjfgghkfjhgv")
+    public List<Post> post(@RequestParam(value = "login") String login){
+        List<Post> post = TextRepository.findByLogin(login);  // select * from post where login = :1
+        return post;
     }
 }
 
